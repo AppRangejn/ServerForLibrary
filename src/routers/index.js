@@ -1,12 +1,13 @@
-// const express = require('express');
-// const router = express.Router();
+const Router = require('express');
 
-// const authorRouter = require('./authors');
-// const bookRouter = require('./books');
-// const customerRouter = require('./customers');
+const authorRouter = require('./authors');
+const bookRouter = require('./books');
+const customerRouter = require('./customers');
 
-// router.use(authorRouter);
-// router.use(bookRouter);
-// router.use(customerRouter);
+const router = new Router();
 
-// module.exports = router;
+router.use(authorRouter);
+router.use(bookRouter);
+router.use(customerRouter);
+
+module.exports = router;

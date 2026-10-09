@@ -1,13 +1,16 @@
-// const {Router} = require('express');
+const Router = require('express');
+const authorController = require('../controllers/authorController');
 
-// const authorContoller = require('./../controllers/authorController');
+const router = new Router();
 
-// const router = new Router();
+router
+    .route('/authors')
+    .get(authorController.getAuthors)
+    .post(authorController.createAuthor)
+    .put(authorController.updateAuthor);
+router
+    .route('/authors/:id')
+    .get(authorController.getAuthorById)
+    .delete(authorController.deleteAuthor);
 
-// router.get('/authors', authorContoller.getAuthor);
-// router.post('/authors', authorContoller.createAuthor);
-// router.put('/authors', authorContoller.updateAuthor);
-// router.get('/authors/:id', authorContoller.getAuthorById);
-// router.delete('/authors', authorContoller.deleteAuthor);
-
-// module.exports = router;
+module.exports = router;

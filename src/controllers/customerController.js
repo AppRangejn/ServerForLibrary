@@ -1,7 +1,7 @@
 const db = require('../../db');
 
 class CustomerController {
-  async getCustomer(req, res) {
+  async getCustomers(req, res) {
     try {
       const customer = await db.query(`SELECT * FROM customers ORDER BY id`);
       res.json(customer.rows);
