@@ -21,11 +21,11 @@ Content-Type: application/json
 
 {
   "id": 10,
-  "full_name": "Joanne Rowlingsssss",
-  "email": "j-r@gmail.com",
+  "full_name": "geJoanne Rowlingsssss",
+  "email": "grj-r@gmail.com",
   "nationality_id": 2
 }
 
 ###
 
-DELETE http://localhost:5000/authors/23
+DELETE http://localhost:5000/authors/24
