@@ -10,6 +10,6 @@ module.exports.validate = async (req, res, next) => {
     req.body = validated;
     next();
   } catch (error) {
-    next(`Error is: ${error.errors}`);
+    next(error);
   }
 };

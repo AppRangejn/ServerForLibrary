@@ -1,16 +1,16 @@
 const db = require('../../db');
 
 class AuthorController {
-  async getAuthors(req, res) {
+  async getAuthors(req, res, next) {
     try {
       const authors = await db.query(`SELECT * FROM authors ORDER BY id`);
       res.json(authors.rows);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
-  async getAuthorById(req, res) {
+  async getAuthorById(req, res, next) {
     try {
       const {
         params: { id },
@@ -20,11 +20,11 @@ class AuthorController {
       ]);
       res.json(author.rows[0]);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
-  async createAuthor(req, res) {
+  async createAuthor(req, res, next) {
     try {
       const { full_name, email, nationality_id } = req.body;
 
@@ -37,11 +37,11 @@ class AuthorController {
 
       res.json(newAuthor.rows[0]);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
-  async updateAuthor(req, res) {
+  async updateAuthor(req, res, next) {
     try {
       const { id, full_name, email, nationality_id } = req.body;
 
@@ -59,11 +59,11 @@ class AuthorController {
       );
       res.json(updatedAuthor.rows[0]);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
-  async deleteAuthor(req, res) {
+  async deleteAuthor(req, res, next) {
     try {
       const {
         params: { id },
@@ -76,7 +76,7 @@ class AuthorController {
       );
       res.json(delAuthor.rows[0]);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 }

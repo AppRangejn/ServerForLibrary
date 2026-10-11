@@ -1,16 +1,16 @@
 const db = require('../../db');
 
 class BookController {
-  async getBooks(req, res) {
+  async getBooks(req, res, next) {
     try {
       const books = await db.query(`SELECT * FROM books ORDER BY id`);
       res.json(books.rows);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
-  async getBookById(req, res) {
+  async getBookById(req, res, next) {
     try {
       const {
         params: { id },
@@ -20,11 +20,11 @@ class BookController {
       ]);
       res.json(book.rows[0]);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
-  async createBook(req, res) {
+  async createBook(req, res, next) {
     try {
       const { title, genre_id, shelf_id, description } = req.body;
 
@@ -37,11 +37,11 @@ class BookController {
 
       res.json(newBook.rows[0]);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
-  async updateBook(req, res) {
+  async updateBook(req, res, next) {
     try {
       const { id, title, genre_id, shelf_id, description } = req.body;
 
@@ -60,11 +60,11 @@ class BookController {
       );
       res.json(updatedBook.rows[0]);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
-  async deleteBook(req, res) {
+  async deleteBook(req, res, next) {
     try {
       const {
         params: { id },
@@ -77,7 +77,7 @@ class BookController {
       );
       res.json(delBook.rows[0]);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 }

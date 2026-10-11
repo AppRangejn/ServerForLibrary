@@ -1,16 +1,16 @@
 const db = require('../../db');
 
 class CustomerController {
-  async getCustomers(req, res) {
+  async getCustomers(req, res, next) {
     try {
       const customer = await db.query(`SELECT * FROM customers ORDER BY id`);
       res.json(customer.rows);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
-  async getCustomerById(req, res) {
+  async getCustomerById(req, res, next) {
     try {
       const {
         params: { id },
@@ -20,11 +20,11 @@ class CustomerController {
       ]);
       res.json(customer.rows[0]);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
-  async createCustomer(req, res) {
+  async createCustomer(req, res, next) {
     try {
       const { full_name, email, phone, password } = req.body;
 
@@ -37,11 +37,11 @@ class CustomerController {
 
       res.json(newCustomer.rows[0]);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
-  async updateCustomer(req, res) {
+  async updateCustomer(req, res, next) {
     try {
       const { id, full_name, email, phone } = req.body;
 
@@ -59,11 +59,11 @@ class CustomerController {
       );
       res.json(updatedCustomer.rows[0]);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 
-  async deleteCustomer(req, res) {
+  async deleteCustomer(req, res, next) {
     try {
       const {
         params: { id },
@@ -76,7 +76,7 @@ class CustomerController {
       );
       res.json(delCustomer.rows[0]);
     } catch (error) {
-      console.log(error);
+      next(error);
     }
   }
 }
