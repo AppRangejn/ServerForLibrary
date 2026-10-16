@@ -26,13 +26,13 @@ class AuthorController {
 
   async createAuthor(req, res, next) {
     try {
-      const { full_name, email, nationality_id } = req.body;
+      const { full_name, email, nationality_title } = req.body;
 
       const newAuthor = await db.query(
         `INSERT INTO authors (full_name, email, nationality_id, "createdAt", "updatedAt")
-         VALUES ($1, $2, $3, NOW(), NOW())
-         RETURNING *`,
-        [full_name, email, nationality_id],
+         VALUES ($1, $2, (SELECT id FROM nationalities WHERE title = $3), NOW(), NOW())
+         RETURNING id, full_name, email, (SELECT title from nationalities WHERE id = nationality_id) AS nationality_title, "createdAt", "updatedAt"`,
+        [full_name, email, nationality_title],
       );
 
       res.json(newAuthor.rows[0]);
@@ -43,19 +43,19 @@ class AuthorController {
 
   async updateAuthor(req, res, next) {
     try {
-      const { id, full_name, email, nationality_id } = req.body;
+      const { id, full_name, email, nationality_title } = req.body;
 
       const updatedAuthor = await db.query(
         `UPDATE authors
         SET
         full_name=$1,
         email=$2,
-        nationality_id=$3,
+        nationality_id=(SELECT id FROM nationalities WHERE title = $3),
         "updatedAt" = NOW()
         WHERE id = $4
-        RETURNING *
+        RETURNING id, full_name, email, (SELECT title from nationalities WHERE id = nationality_id) AS nationality_title, "updatedAt"
         `,
-        [full_name, email, nationality_id, id],
+        [full_name, email, nationality_title, id],
       );
       res.json(updatedAuthor.rows[0]);
     } catch (error) {

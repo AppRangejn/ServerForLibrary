@@ -1,10 +1,8 @@
-const VALIDATION_SCHEMA = require('../utils/validationSchemas');
-
-module.exports.validate = async (req, res, next) => {
+module.exports.validate = (schema) => async (req, res, next) => {
   const { body } = req;
 
   try {
-    const validated = await VALIDATION_SCHEMA.validate(body, {
+    const validated = await schema.validate(body, {
       abortEarly: false,
     });
     req.body = validated;
@@ -13,3 +11,4 @@ module.exports.validate = async (req, res, next) => {
     next(error);
   }
 };
+
